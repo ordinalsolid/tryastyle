@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Try A Style</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap');
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: white;
+      color: black;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      height: 100vh;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 16vw;
+      font-weight: 900;
+      margin: 0;
+      padding-top: 2vh;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      line-height: 0.85;
+      flex-shrink: 0;
+    }
+
+    #word-container {
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+
+    #result {
+      font-size: 8vw;
+      font-weight: 700;
+      text-transform: uppercase;
+      opacity: 0;
+      transition: opacity 0.2s;
+      word-wrap: break-word;
+    }
+
+    #result.visible {
+      opacity: 1;
+    }
+
+    /* GO TEXT STYLING */
+    #go-btn {
+      background: transparent;
+      color: black;
+      font-family: 'Roboto', sans-serif;
+      font-size: 20vh;
+      line-height: 1;
+      font-weight: 900;
+      padding: 0;
+      margin: 0 0 2vh 0;
+      border: none;
+      cursor: pointer;
+      outline: none;
+      transform-origin: center center;
+      -webkit-tap-highlight-color: transparent;
+      flex-shrink: 0;
+      
+      /* Apply the syncopated vibration */
+      animation: syncopatedVibration 2.5s infinite linear;
+    }
+
+    #go-btn:active {
+      /* When clicked, vibrate intensely and constantly */
+      animation: rapidShake 0.1s infinite linear;
+    }
+
+    #go-btn:disabled {
+      cursor: wait;
+      /* Keep vibrating while thinking, maybe slightly less opacity */
+      opacity: 0.7;
+      animation: rapidShake 0.1s infinite linear;
+    }
+
+    /* The Syncopated Vibration 
+       It moves in bursts (0-10%), pauses (10-30%), bursts again (30-40%), etc.
+    */
+    @keyframes syncopatedVibration {
+      0% { transform: translate(0, 0); }
+      
+      /* Burst 1 */
+      2% { transform: translate(-3px, 1px); }
+      4% { transform: translate(2px, -2px); }
+      6% { transform: translate(-1px, 2px); }
+      8% { transform: translate(1px, -1px); }
+      10% { transform: translate(0, 0); }
+      
+      /* Pause */
+      30% { transform: translate(0, 0); }
+      
+      /* Burst 2 (Short) */
+      32% { transform: translate(2px, 0px); }
+      34% { transform: translate(-2px, 0px); }
+      36% { transform: translate(0, 0); }
+      
+      /* Pause */
+      60% { transform: translate(0, 0); }
+      
+      /* Burst 3 (Intense) */
+      62% { transform: translate(-2px, -2px); }
+      64% { transform: translate(2px, 2px); }
+      66% { transform: translate(-1px, 3px); }
+      68% { transform: translate(0, 0); }
+      
+      /* Long Pause */
+      100% { transform: translate(0, 0); }
+    }
+
+    /* Constant rapid shaking for active state */
+    @keyframes rapidShake {
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(-4px, 2px); }
+      50% { transform: translate(2px, -4px); }
+      75% { transform: translate(-2px, 4px); }
+      100% { transform: translate(4px, -2px); }
+    }
+
+    footer {
+      width: 90%;
+      max-width: 800px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      color: black;
+      line-height: 1.3;
+      font-weight: 400;
+      flex-shrink: 0;
+    }
+    
+    footer a {
+      color: black;
+      text-decoration: underline;
+      font-weight: 700;
+    }
+
+    @media (max-width: 600px) {
+      #result { font-size: 10vw; }
+      #go-btn { font-size: 15vh; }
+      footer { font-size: 11px; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>TRY A STYLE.</h1>
+
+  <div id="word-container">
+    <div id="result"></div>
+  </div>
+    
+  <button id="go-btn">GO</button>
+
+  <footer>
+   This is a Thesis aesthetics generator for iteration and experimentation. Both <a href="https://cari.institute/">CARI</a> and <a href="https://aesthetics.fandom.com/wiki/Aesthetics_Wiki">AESTHETICS WIKI</a> were critical resources in the making of this utility. 2006.&nbsp;
+  </footer>
+
+  <script>
+    const styles = [
+      "8-BIT", "ACID DESIGN", "ACIDGRAFIX", "AIRBRUSH SURREALISM", "AI SLOP", "AMERICANA", "ANIME", 
+      "ART DECO", "ART NOUVEAU", "BAROQUE", "BOHEMIAN","BRAINROT","BRUTALISM", "BUREAUCRATIC", 
+      "CARICATURE", "CASSETTE FUTURISM", "COASTAL GRANDMOTHER", "CONSTRUCTIVISM", "CORPORATE", 
+      "CORPORATE HIPPIE", "COTTAGE CORE", "COUNTRY KITSCH","CURLY GIRLY", "CRAFTCORE", "CYBER PUNK", 
+      "CYBERBOUGIE", "CYBERSIGILISM", "DADA", "DARK ACADEMIA", "DECORA", "DEFAULT", "DE STIJL", 
+      "DOLLAR STORE VERNACULAR", "DUNGEON SYNTH", "EARLY 80S EAST COAST HIP HOP", "FRASURBANE", 
+      "FRUTIGER AERO", "FUTURISM", "GENERATIVE", "GEN X SOFT CLUB","GLAM", "GLITCH", 
+      "GLOBAL VILLAGE COFFEEHOUSE", "GOBLIN CORE", "GOOGIE", "GOTH", "GRANOLA GUY", "GRUNGE", 
+      "HARAJUKU", "HEAVY METAL", "HORROR", "HYPER REALISM", "INDIE SLEAZE", "INDIECRAFT", 
+      "INTERNET AWESOMESAUCE", "ITALIAN BRAINROT", "JAPANDI", "JUGENDSTIL", "KAWAII", "KITSCH", 
+      "LO-FI", "LO-TECH", "MAXIMALISM", "MCBLING", "MEMPHIS", "MICROGRAPHICS","MIDCENTURY MODERN", 
+      "MINIMALISM", "MISSION SCHOOL", "NAIVE", "NEO-VECTORHEART", "NEOCLASSICAL", "NERD CORE", 
+      "NEON OOZE", "NEW AGE", "NEW WAVE TROPICAL", "NORMCORE", "NORWEGIAN BLACK METAL", "OP ART", 
+      "ORGANIC MODERNISM","PLAKATSTIL", "POP", "PREHISTORIC", "PREPPY", "PSYCHEDELIA", "PULP FANTASY", 
+      "PUNK", "QUAKER", "ROCOCO", "ROMANESQUE", "SANTA FE STYLE", "SCI-FI", "SHITPIC", "SKUEMORPHISM", 
+      "SOFT COLONIAL WANDERLUST", "SPORTSBRUT", "STEAMPUNK", "SUPERFLAT", "SURFER", "SURREALIST", 
+      "SWISS", "SYNTHWAVE", "TROPICAL", "UTOPIAN SCHOLASTIC", "VALLEY GIRL", "VAPORWAVE", "VAUDEVILLE", 
+      "VECTOR MINIMALISM", "VICTORIAN", "WABI SABI", "WEB 1.0", "WESTERN", "XPIRITUALISM", "Y2K"
+    ];
+
+    const btn = document.getElementById('go-btn');
+    const resultDisplay = document.getElementById('result');
+
+    btn.addEventListener('click', () => {
+      // Make result visible
+      resultDisplay.classList.add('visible');
+      
+      // Disable interaction during cycle
+      btn.disabled = true;
+      
+      // Cycling effect
+      let intervalSpeed = 50;
+      const duration = 2000; // Total spin time in ms
+      const startTime = Date.now();
+
+      const cycle = setInterval(() => {
+        // Pick random word
+        const randomStyle = styles[Math.floor(Math.random() * styles.length)];
+        resultDisplay.textContent = randomStyle;
+
+        // Check if time is up
+        if (Date.now() - startTime > duration) {
+          clearInterval(cycle);
+          finishCycle();
+        }
+      }, intervalSpeed);
+    });
+
+    function finishCycle() {
+      // Pick one final winner
+      const finalStyle = styles[Math.floor(Math.random() * styles.length)];
+      resultDisplay.textContent = finalStyle;
+      
+      // Re-enable button
+      btn.disabled = false;
+    }
+  </script>
+</body>
+</html>
